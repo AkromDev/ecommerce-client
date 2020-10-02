@@ -11,14 +11,21 @@
       "strict": true,
       "target": "esnext",
       "baseUrl": ".",
+      "noImplicitAny": false,
+      "paths": {
+        "src": ["./src"],
+        "assets": ["./assets"],
+      },
+      "typeRoots": [
+        "./node_modules/@types",
+        "./custom_typings"
+      ],
     },
+    "include": ["src"],
     "exclude": [
       "node_modules",
       "babel.config.js",
       "metro.config.js",
-      "jest.config.js"
-    ],
-    "paths": {
-      "src": ["./src"],
-    },
+      "jest.config.js",
+    ]
   }

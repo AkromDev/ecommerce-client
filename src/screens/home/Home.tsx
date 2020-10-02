@@ -1,10 +1,9 @@
 import Card from 'src/components/category-microformat';
 import Loading from 'src/components/loading';
 import React from 'react';
-import {FlatList, ScrollView, Text, View} from 'react-native';
+import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {useQuery} from 'urql';
 import query from './query';
-import styles from './styles';
 import Grid from 'src/components/grid';
 
 const Home = ({navigation}: any) => {
@@ -46,3 +45,17 @@ const Home = ({navigation}: any) => {
 };
 
 export default Home;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#EFEFEF',
+  },
+  title: {
+    fontSize: 32,
+    fontWeight: 'bold',
+    marginHorizontal: 8,
+    marginVertical: 30,
+    paddingLeft: 20,
+    paddingTop: 100,
+  },
+});

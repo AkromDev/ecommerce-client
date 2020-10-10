@@ -9,6 +9,7 @@ const renderType = (item) => {
     product: <Product {...item} />,
   };
   return types[item.itemType];
+  // return types.product;
 };
 
 const renderItems = ({item}) => {
@@ -26,19 +27,25 @@ const renderItems = ({item}) => {
         flex: 1,
         flexDirection: 'row',
       }}>
-      {item.columns.map((c) => (
-        <View
-          style={{
-            flex: 1 / item.columns.length,
-          }}>
-          {renderType(c)}
-        </View>
-      ))}
+      {item.columns.map((c) => {
+        if (item.columns.length === 1) {
+          return null;
+        }
+        return (
+          <View
+            style={{
+              flex: 1 / item.columns.length,
+            }}>
+            {renderType(c)}
+          </View>
+        );
+      })}
     </View>
   );
 };
 
 const Grid = ({rows}) => {
+  console.log('rows', rows);
   return (
     <FlatList
       data={rows}

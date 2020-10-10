@@ -1,17 +1,9 @@
 import React from 'react';
 import {useNavigation} from '@react-navigation/native';
 
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Button,
-  FlatList,
-  Text,
-  Image,
-} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 
-const Card = ({item, ...rest}) => {
+const Card = ({item}) => {
   const navigation = useNavigation();
   const image = item?.components.find((c) => c.name === 'Icon')?.content
     ?.images?.[0];
@@ -25,7 +17,6 @@ const Card = ({item, ...rest}) => {
           uri: image.url,
         }}
       />
-      <Text style={styles.title}>{item.name}</Text>
     </TouchableOpacity>
   );
 };
@@ -35,11 +26,11 @@ export default Card;
 const styles = StyleSheet.create({
   btn: {
     flex: 1,
-    borderRadius: 4,
     justifyContent: 'center',
     padding: 10,
-    width: 120,
-    marginHorizontal: 4,
+    width: 80,
+    height: 80,
+    marginRight: 14,
     backgroundColor: '#fff',
     shadowColor: '#000',
     shadowOffset: {
@@ -49,10 +40,12 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.05,
     shadowRadius: 4,
     elevation: 7,
+    borderRadius: 80 / 2,
+    alignItems: 'center',
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 60,
+    height: 60,
     resizeMode: 'cover',
   },
   title: {

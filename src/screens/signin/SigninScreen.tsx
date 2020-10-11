@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import InputForm from 'src/components/common/Input';
 import Header from 'src/components/Header';
 import Common from 'src/components/common';
 import {sizes, theme} from 'src/styles';
@@ -14,12 +13,12 @@ export default function SigninScreen() {
     <>
       <Header title="Sign in" />
       <View style={styles.container}>
-        <InputForm
+        <Common.Input
           headerText="Email"
           placeholder="abcdef@gmail.com"
           onTextChange={(value) => setEmail(value)}
         />
-        <InputForm
+        <Common.Input
           headerText="Password"
           placeholder="6-10 words"
           onTextChange={(value) => setPassword(value)}

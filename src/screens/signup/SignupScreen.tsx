@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import InputForm from 'src/components/common/Input';
 import Header from 'src/components/Header';
 import {sizes, theme} from 'src/styles';
 import Common from 'src/components/common';
@@ -16,22 +15,22 @@ export default function SignupScreen() {
     <ScrollView>
       <Header title="Sign up" />
       <View style={styles.container}>
-        <InputForm
+        <Common.Input
           headerText="Name"
           placeholder="Hung Kieu"
           onTextChange={(value) => setName(value)}
         />
-        <InputForm
+        <Common.Input
           headerText="Email"
           placeholder="abcde@gmail.com"
           onTextChange={(value) => setEmail(value)}
         />
-        <InputForm
+        <Common.Input
           headerText="Password"
           placeholder="6-20 words"
           onTextChange={(value) => setPassword(value)}
         />
-        <InputForm
+        <Common.Input
           headerText="Repeat password"
           placeholder="6-20 words"
           onTextChange={(value) => setRepeat(value)}

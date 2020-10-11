@@ -8,7 +8,7 @@ type Props = {
   placeholder?: string;
   onTextChange?: (v: string) => void;
 };
-function Input({headerText, placeholder, onTextChange}) {
+function Input({headerText, placeholder, onTextChange}: Props) {
   return (
     <Block width="all">
       <Text style={styles.text}>{headerText}</Text>

@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet, Button} from 'react-native';
-import InputForm from 'src/components/common-components/InputForm';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {View, StyleSheet} from 'react-native';
+import InputForm from 'src/components/common/Input';
 import Header from 'src/components/Header';
 import Common from 'src/components/common';
-import {sizes} from 'src/styles';
+import {sizes, theme} from 'src/styles';
+import navigation from 'src/utils/navigation';
 
 export default function SigninScreen() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [, setEmail] = useState('');
+  const [, setPassword] = useState('');
 
   return (
     <>
@@ -17,25 +17,35 @@ export default function SigninScreen() {
         <InputForm
           headerText="Email"
           placeholder="abcdef@gmail.com"
-          setValue={(value) => setEmail(value)}
+          onTextChange={(value) => setEmail(value)}
         />
         <InputForm
           headerText="Password"
           placeholder="6-10 words"
-          setValue={(value) => setPassword(value)}
+          onTextChange={(value) => setPassword(value)}
         />
-        <View>
-          <Common.Block mt={10} clickable>
-            <Common.Txt>Forgot your password?</Common.Txt>
-          </Common.Block>
-        </View>
-        <Common.Button title="Sign in" style={{width: '100%'}} mv={20} />
-        <View style={styles.bottomText}>
-          <Text>Don't have an account?</Text>
-          <TouchableOpacity>
-            <Text>Sign up</Text>
-          </TouchableOpacity>
-        </View>
+        <Common.Button title="Sign in" mv={20} width="all" />
+        <Common.Button
+          title="Forgot your password?"
+          mode="text"
+          txtColor={theme.blueSemantic}
+          textStyle={{fontSize: 14}}
+          mt={20}
+          mb={20}
+        />
+        <Common.Block
+          flexDirection="row"
+          justifyContent="center"
+          alignItems="center">
+          <Common.Txt>Don't have an account?</Common.Txt>
+          <Common.Button
+            title="Sign up"
+            mode="text"
+            ml={5}
+            onPress={() => navigation.navigate('Signup')}
+            txtColor={theme.blueSemantic}
+          />
+        </Common.Block>
       </View>
     </>
   );
@@ -49,9 +59,9 @@ const styles = StyleSheet.create({
     paddingTop: 20,
     paddingHorizontal: sizes.padding,
   },
-
   bottomText: {
     flexDirection: 'row',
     justifyContent: 'center',
+    alignItems: 'center',
   },
 });

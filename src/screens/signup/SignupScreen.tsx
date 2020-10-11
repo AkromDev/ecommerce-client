@@ -1,44 +1,63 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
-import InputForm from 'src/components/common-components/InputForm';
-import FormButton from 'src/components/common-components/FormButton';
+import {View, StyleSheet, ScrollView} from 'react-native';
+import InputForm from 'src/components/common/Input';
 import Header from 'src/components/Header';
-import {sizes} from 'src/styles';
+import {sizes, theme} from 'src/styles';
 import Common from 'src/components/common';
+import navigation from 'src/utils/navigation';
 
 export default function SignupScreen() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeat, setRepeat] = useState('');
+  const [, setName] = useState('');
+  const [, setEmail] = useState('');
+  const [, setPassword] = useState('');
+  const [, setRepeat] = useState('');
 
   return (
-    <>
+    <ScrollView>
       <Header title="Sign up" />
       <View style={styles.container}>
         <InputForm
           headerText="Name"
           placeholder="Hung Kieu"
-          setValue={(value) => setName(value)}
+          onTextChange={(value) => setName(value)}
         />
         <InputForm
           headerText="Email"
           placeholder="abcde@gmail.com"
-          setValue={(value) => setEmail(value)}
+          onTextChange={(value) => setEmail(value)}
         />
         <InputForm
           headerText="Password"
           placeholder="6-20 words"
-          setValue={(value) => setPassword(value)}
+          onTextChange={(value) => setPassword(value)}
         />
         <InputForm
           headerText="Repeat password"
           placeholder="6-20 words"
-          setValue={(value) => setRepeat(value)}
+          onTextChange={(value) => setRepeat(value)}
         />
-        <Common.Button title="Sign up" style={styles.formButton} mt={30} />
+        <Common.Button
+          title="Sign up"
+          style={styles.formButton}
+          mt={30}
+          width="all"
+        />
+        <Common.Block
+          flexDirection="row"
+          justifyContent="center"
+          alignItems="center"
+          mt={20}>
+          <Common.Txt>Already have an account?</Common.Txt>
+          <Common.Button
+            title="Sign in"
+            mode="text"
+            ml={5}
+            onPress={() => navigation.navigate('Signin')}
+            txtColor={theme.blueSemantic}
+          />
+        </Common.Block>
       </View>
-    </>
+    </ScrollView>
   );
 }
 

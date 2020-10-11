@@ -23,6 +23,7 @@ export interface Props extends ViewProps, Space {
   style?: StyleProp<ViewStyle>;
   clickable?: boolean;
   onPress?: () => void;
+  width?: 'all' | number | string;
 }
 
 const Block = ({
@@ -37,6 +38,7 @@ const Block = ({
   flexDirection,
   flexBasis,
   clickable,
+  width,
   ...props
 }: Props) => {
   const Comp = (p: Props) =>
@@ -52,6 +54,8 @@ const Block = ({
         flexDirection && {flexDirection},
         alignItems && {alignItems},
         justifyContent && {justifyContent},
+        ((width || width === 0) && width !== 'all' && {width}) || null,
+        width === 'all' && {width: '100%'},
         style && style,
         center && Styles.center,
         getSpace(props),

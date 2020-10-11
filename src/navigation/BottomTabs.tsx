@@ -3,12 +3,16 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from 'src/screens/home';
 import CartContainer from 'src/screens/cart';
 import ProfileContainer from 'src/screens/profile';
+import LoginScreen from 'src/screens/login/LoginScreen';
+import SignupScreen from 'src/screens/signup/SignupScreen';
 import {theme} from 'src/styles/theme';
 import HomeIcon from 'src/svgicons/Home';
 import CartIcon from 'src/svgicons/Cart';
 import Avatar from 'src/svgicons/Avatar';
 import OrdersContainer from 'src/screens/orders/OrdersContainer';
 import Receipt from 'src/svgicons/Receipt';
+//import LoginIcon from 'src/svgicons/LoginIcon';
+//import SignupIcon from 'src/svgicons/SignupIcon';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,6 +38,18 @@ const tabs = [
     name: 'Profile',
     component: ProfileContainer,
     icon: ({color, size: _}: any) => <Avatar fill={color} />,
+    private: true,
+  },
+  {
+    name: 'Login',
+    component: LoginScreen,
+    //icon: ({color, size: _}: any) => <LoginIcon fill={color} />,
+    private: true,
+  },
+  {
+    name: 'Signup',
+    component: SignupScreen,
+    //icon: ({color, size: _}: any) => <SignupIcon fill={color} />,
     private: true,
   },
 ];

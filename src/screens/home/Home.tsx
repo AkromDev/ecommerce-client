@@ -29,6 +29,7 @@ const Home = ({navigation}: any) => {
     );
   }
   const {folder, grid} = data;
+  console.log('data', grid);
   return (
     <View style={[styles.container]}>
       <ScrollView>

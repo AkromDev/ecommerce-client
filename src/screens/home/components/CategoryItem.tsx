@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.05,
     shadowRadius: 4,
-    elevation: 7,
+    elevation: 4,
     borderRadius: 80 / 2,
     alignItems: 'center',
   },
@@ -47,12 +47,5 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     resizeMode: 'cover',
-  },
-  title: {
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    fontSize: 10,
-    fontWeight: '600',
-    letterSpacing: 2,
   },
 });

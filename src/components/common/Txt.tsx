@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {Text, TextProps, StyleSheet} from 'react-native';
+import {Text, TextProps, StyleSheet, TextStyle} from 'react-native';
 import {sizes} from 'src/styles';
 import {fontWeightType, getSpace, SizeType, Space} from './helpers';
 
@@ -11,6 +11,7 @@ export interface TxtProps extends TextProps, Space {
   fontWeight?: fontWeightType;
   letterSpacing?: number;
   lineHeight?: number;
+  textAlign?: TextStyle['textAlign'];
 }
 
 const styles = StyleSheet.create({
@@ -31,6 +32,7 @@ const Txt = ({
   fontWeight,
   letterSpacing,
   lineHeight,
+  textAlign,
   ...props
 }: TxtProps) => {
   return (
@@ -46,6 +48,7 @@ const Txt = ({
         (letterSpacing && {letterSpacing}) || null,
         (lineHeight && {lineHeight}) || null,
         fontWeight && {fontWeight},
+        textAlign && {textAlign},
         textTransform && {textTransform},
         getSpace(props),
       ]}

@@ -2,6 +2,7 @@ import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import Common from 'src/components/common';
 import {sizes, theme} from 'src/styles';
+import navigation from 'src/utils/navigation';
 import {Product} from '../CartContainer';
 import CartItem from './CartItem';
 
@@ -32,6 +33,7 @@ function Cart(props: Props) {
           </Common.Txt>
         </Common.Block>
         <Common.Button
+          onPress={() => navigation.navigate('PaymentForm')}
           mt={30}
           txtColor={theme.black}
           title="Payment"

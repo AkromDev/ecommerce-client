@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   StyleProp,
 } from 'react-native';
+import {Styles} from 'src/styles';
 import {getSpace, Space} from './helpers';
 
 export const CARD_BORDER_RADIUS = 16;
@@ -35,7 +36,7 @@ const Card = (props: Props) => {
     <Comp
       style={[
         styles.container,
-        styles.containerShadow,
+        Styles.shadow,
         containerStyle,
         (backgroundColor && {backgroundColor}) || null,
         (typeof borderRadius === 'number' && {borderRadius}) || null,
@@ -55,15 +56,5 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingHorizontal: 24,
     borderRadius: CARD_BORDER_RADIUS,
-  },
-  containerShadow: {
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.15,
-    shadowRadius: 4.65,
-    elevation: 8,
   },
 });

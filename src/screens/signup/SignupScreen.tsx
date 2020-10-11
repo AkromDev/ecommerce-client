@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingHorizontal: sizes.padding,
+    paddingTop: 10,
   },
   formButton: {},
 });

@@ -24,7 +24,7 @@ const ProductCard = ({item}) => {
     : {};
 
   image = i;
-
+  console.log('image', image.url);
   return (
     <TouchableOpacity
       style={{...styles.btn, flex: 1}}

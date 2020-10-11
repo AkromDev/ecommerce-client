@@ -8,13 +8,16 @@ import Product from 'src/screens/product/index';
 import Article from 'src/screens/article/index';
 import {StackHeaderOptions} from '@react-navigation/stack/lib/typescript/src/types';
 import BottomTabs from './BottomTabs';
+import Payment from 'src/screens/payment';
+import {navigationRef} from 'src/utils/navigation';
 
 const Stack = createStackNavigator();
 
 function RootNavigation() {
   return (
-    <NavigationContainer>
+    <NavigationContainer ref={navigationRef}>
       <Stack.Navigator
+        headerMode="none"
         screenOptions={{
           headerTransparent: true,
         }}>
@@ -40,6 +43,24 @@ function RootNavigation() {
           component={Product}
           options={{
             headerTitle: 'Product',
+            headerBackTitleVisible: false,
+            ...stackStyling,
+          }}
+        />
+        <Stack.Screen
+          name="PaymentForm"
+          component={Payment.Form}
+          options={{
+            headerTitle: 'Payment',
+            headerBackTitleVisible: false,
+            ...stackStyling,
+          }}
+        />
+        <Stack.Screen
+          name="PaymentConfirm"
+          component={Payment.Confirm}
+          options={{
+            headerTitle: 'Payment',
             headerBackTitleVisible: false,
             ...stackStyling,
           }}

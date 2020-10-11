@@ -20,6 +20,7 @@ export const theme = {
     active: colors.orange,
     inactive: colors.grey,
   },
+  ...colors,
 };
 
 export const sizes = {

@@ -11,8 +11,6 @@ import CartIcon from 'src/svgicons/Cart';
 import Avatar from 'src/svgicons/Avatar';
 import OrdersContainer from 'src/screens/orders/OrdersContainer';
 import Receipt from 'src/svgicons/Receipt';
-//import LoginIcon from 'src/svgicons/LoginIcon';
-//import SignupIcon from 'src/svgicons/SignupIcon';
 
 const Tab = createBottomTabNavigator();
 

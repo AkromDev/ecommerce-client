@@ -10,6 +10,8 @@ import {StackHeaderOptions} from '@react-navigation/stack/lib/typescript/src/typ
 import BottomTabs from './BottomTabs';
 import Payment from 'src/screens/payment';
 import {navigationRef} from 'src/utils/navigation';
+import SigninScreen from 'src/screens/signin/SigninScreen';
+import SignupScreen from 'src/screens/signup/SignupScreen';
 
 const Stack = createStackNavigator();
 
@@ -61,6 +63,22 @@ function RootNavigation() {
           component={Payment.Confirm}
           options={{
             headerTitle: 'Payment',
+            headerBackTitleVisible: false,
+            ...stackStyling,
+          }}
+        />
+        <Stack.Screen
+          name="Signin"
+          component={SigninScreen}
+          options={{
+            headerBackTitleVisible: false,
+            ...stackStyling,
+          }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={SignupScreen}
+          options={{
             headerBackTitleVisible: false,
             ...stackStyling,
           }}

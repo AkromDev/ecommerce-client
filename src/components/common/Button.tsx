@@ -3,6 +3,8 @@ import {
   TouchableOpacity,
   TouchableOpacityProps,
   StyleSheet,
+  StyleProp,
+  TextStyle,
 } from 'react-native';
 import {sizes, theme} from 'src/styles';
 import {fontWeightType, getSpace, Space} from './helpers';
@@ -16,6 +18,8 @@ export interface ButtonProps extends TouchableOpacityProps, Space {
   mode?: 'regular' | 'outline' | 'text';
   txtColor?: string;
   fontWeight?: fontWeightType;
+  width?: 'all' | number | string;
+  textStyle?: StyleProp<TextStyle>;
 }
 
 const Button = ({
@@ -27,20 +31,24 @@ const Button = ({
   style,
   txtColor,
   fontWeight,
+  textStyle,
   ...rest
 }: ButtonProps) => {
   const textColor = {
     text: theme.black,
     outline: theme.primary,
-    regular: '#FFF',
+    regular: theme.dark,
   };
+  const {width} = rest;
   return (
     <TouchableOpacity
       style={[
-        styles.container,
+        mode !== 'text' && styles.container,
         disabled && styles.disabled,
         mode === 'outline' && styles.outline,
         mode === 'text' && styles.textButton,
+        (rest.hasOwnProperty('width') && width !== 'all' && {width}) || null,
+        width === 'all' && {width: '100%'},
         style && style,
         getSpace(rest),
       ]}
@@ -51,7 +59,8 @@ const Button = ({
       <Text
         color={txtColor || textColor[mode]}
         size="md"
-        fontWeight={fontWeight || '500'}>
+        fontWeight={fontWeight || '500'}
+        style={textStyle}>
         {title}
       </Text>
       {right && right}

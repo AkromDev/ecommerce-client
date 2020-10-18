@@ -12,6 +12,7 @@ import Payment from 'src/screens/payment';
 import {navigationRef} from 'src/utils/navigation';
 import SigninScreen from 'src/screens/signin/SigninScreen';
 import SignupScreen from 'src/screens/signup/SignupScreen';
+import OrderDetailsContainer from 'src/screens/orderdetails';
 
 const Stack = createStackNavigator();
 
@@ -63,6 +64,15 @@ function RootNavigation() {
           component={Payment.Confirm}
           options={{
             headerTitle: 'Payment',
+            headerBackTitleVisible: false,
+            ...stackStyling,
+          }}
+        />
+        <Stack.Screen
+          name="OrderDetails"
+          component={OrderDetailsContainer}
+          options={{
+            headerTitle: 'Order Details',
             headerBackTitleVisible: false,
             ...stackStyling,
           }}

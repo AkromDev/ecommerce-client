@@ -1,13 +1,25 @@
 import React from 'react';
-import {Text, View} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {SafeAreaView, ScrollView} from 'react-native';
+import Common from 'src/components/common';
+import {sizes} from 'src/styles';
+import {Order} from '../OrdersContainer';
+import OrderItem from './OrderItem';
 
-function Orders() {
-  const {top: paddingTop} = useSafeAreaInsets();
+type Props = {
+  orders: Order[];
+};
+function Orders(props: Props) {
+  const {orders} = props;
   return (
-    <View style={{paddingTop, alignItems: 'center'}}>
-      <Text>Orders Screen</Text>
-    </View>
+    <SafeAreaView>
+      <ScrollView style={{paddingHorizontal: sizes.padding}}>
+        <Common.Block alignItems="center" mt={50}>
+          {orders.map((item) => (
+            <OrderItem key={item.id} order={item} />
+          ))}
+        </Common.Block>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

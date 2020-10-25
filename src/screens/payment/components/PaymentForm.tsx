@@ -4,6 +4,7 @@ import Header from 'src/components/Header';
 import {sizes, theme} from 'src/styles';
 import Common from 'src/components/common';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import navigation from 'src/utils/navigation';
 
 function PaymentForm() {
   const {bottom} = useSafeAreaInsets();
@@ -59,6 +60,7 @@ function PaymentForm() {
           mt={30}
           mb={bottom + 20}
           width="all"
+          onPress={() => navigation.navigate('PaymentConfirm')}
         />
       </View>
     </ScrollView>

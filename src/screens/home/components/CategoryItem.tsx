@@ -1,17 +1,17 @@
 import React from 'react';
-import {useNavigation} from '@react-navigation/native';
+// import {useNavigation} from '@react-navigation/native';
 
 import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 
 const Card = ({item}) => {
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const image = item?.components.find((c) => c.name === 'Icon')?.content
     ?.images?.[0];
   return (
     <TouchableOpacity
       style={styles.btn}
       // onPress={() => navigation.navigate('Catalogue', {...item})}
-      >
+    >
       <Image
         style={styles.image}
         source={{

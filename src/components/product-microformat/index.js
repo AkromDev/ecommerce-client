@@ -1,12 +1,8 @@
 import React from 'react';
-// import {useNavigation} from '@react-navigation/native';
-
 import {View, TouchableOpacity, Text, Image} from 'react-native';
 import styles from './styles';
 
 const ProductCard = ({product}) => {
-  // const navigation = useNavigation();
-
   return (
     <TouchableOpacity
       style={{...styles.btn, flex: 1}}

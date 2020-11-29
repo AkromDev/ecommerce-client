@@ -1,17 +1,14 @@
 import React from 'react';
 import 'react-native-gesture-handler';
-import {Provider, createClient} from 'urql';
-import RootNavigation from 'src/navigation/RootNavigation';
-
-const client = createClient({
-  url: 'https://api.crystallize.com/furniture/catalogue',
-});
+import RootNavigation from './src/navigation/RootNavigation';
+import client from './src/apollo/client';
+import {ApolloProvider} from '@apollo/client';
 
 const App = () => {
   return (
-    <Provider value={client}>
+    <ApolloProvider client={client}>
       <RootNavigation />
-    </Provider>
+    </ApolloProvider>
   );
 };
 

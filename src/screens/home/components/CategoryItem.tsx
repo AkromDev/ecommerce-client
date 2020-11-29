@@ -10,7 +10,8 @@ const Card = ({item}) => {
   return (
     <TouchableOpacity
       style={styles.btn}
-      onPress={() => navigation.navigate('Catalogue', {...item})}>
+      // onPress={() => navigation.navigate('Catalogue', {...item})}
+      >
       <Image
         style={styles.image}
         source={{

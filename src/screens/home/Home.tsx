@@ -2,22 +2,16 @@ import CategoryItem from 'src/screens/home/components/CategoryItem';
 import Loading from 'src/components/loading';
 import React from 'react';
 import {FlatList, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {useQuery} from 'urql';
-import query from './query';
-import Grid from 'src/components/grid';
+import Grid from './components/Products';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useProductsQuery } from 'src/apollo/generated';
+import categories from './data'
 
 const Home = ({navigation}: any) => {
   const {top: paddingTop = 0} = useSafeAreaInsets();
   console.log(navigation);
-  const [{fetching, error, data}] = useQuery({
-    query: query,
-    variables: {
-      language: 'en',
-      path: '/shop',
-    },
-  });
-  if (fetching) {
+ const {data, loading, error} = useProductsQuery()
+  if (loading) {
     return <Loading />;
   }
   if (error) {
@@ -28,13 +22,11 @@ const Home = ({navigation}: any) => {
       </View>
     );
   }
-  const {folder, grid} = data;
-  console.log('data', grid);
   return (
     <View style={[styles.container]}>
       <ScrollView>
         <FlatList
-          data={folder.children}
+          data={categories}
           renderItem={(item) => <CategoryItem {...item} />}
           contentContainerStyle={{paddingRight: 30}}
           keyExtractor={(item) => item.id}
@@ -42,7 +34,7 @@ const Home = ({navigation}: any) => {
           horizontal={true}
           style={[styles.flatList, {paddingTop: paddingTop + 50}]}
         />
-        <Grid {...grid} />
+        <Grid products={data && data.products || []} />
       </ScrollView>
     </View>
   );

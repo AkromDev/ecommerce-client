@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Text, FlatList, View} from 'react-native';
+import {FlatList, View} from 'react-native';
 import Product from 'src/components/product-microformat';
 import Document from 'src/components/document-microformat';
 const renderType = (item) => {

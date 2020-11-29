@@ -1,0 +1,8 @@
+fragment ProductFields on Product{
+     _id
+    title
+    imageUrl
+    storeId
+    description
+    price
+}

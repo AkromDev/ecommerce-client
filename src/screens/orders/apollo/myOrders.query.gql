@@ -1,0 +1,17 @@
+query myOrders{
+  myOrders{
+    _id
+    user{
+      firstName
+      lastName
+    }
+   productsOrdered{
+    quantity
+    product{
+      _id
+      title
+      imageUrl
+    }
+  }
+  }
+}

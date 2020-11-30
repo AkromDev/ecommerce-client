@@ -231,6 +231,28 @@ export type ProductsQuery = (
   )> }
 );
 
+export type MyOrdersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type MyOrdersQuery = (
+  { __typename?: 'Query' }
+  & { myOrders: Array<(
+    { __typename?: 'Order' }
+    & Pick<Order, '_id'>
+    & { user: (
+      { __typename?: 'User' }
+      & Pick<User, 'firstName' | 'lastName'>
+    ), productsOrdered: Array<(
+      { __typename?: 'ProductOrdered' }
+      & Pick<ProductOrdered, 'quantity'>
+      & { product: (
+        { __typename?: 'Product' }
+        & Pick<Product, '_id' | 'title' | 'imageUrl'>
+      ) }
+    )> }
+  )> }
+);
+
 export type LoginMutationVariables = Exact<{
   input: LoginInput;
 }>;
@@ -299,6 +321,50 @@ export function useProductsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<P
 export type ProductsQueryHookResult = ReturnType<typeof useProductsQuery>;
 export type ProductsLazyQueryHookResult = ReturnType<typeof useProductsLazyQuery>;
 export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQueryVariables>;
+export const MyOrdersDocument = gql`
+    query myOrders {
+  myOrders {
+    _id
+    user {
+      firstName
+      lastName
+    }
+    productsOrdered {
+      quantity
+      product {
+        _id
+        title
+        imageUrl
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useMyOrdersQuery__
+ *
+ * To run a query within a React component, call `useMyOrdersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMyOrdersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useMyOrdersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useMyOrdersQuery(baseOptions?: Apollo.QueryHookOptions<MyOrdersQuery, MyOrdersQueryVariables>) {
+        return Apollo.useQuery<MyOrdersQuery, MyOrdersQueryVariables>(MyOrdersDocument, baseOptions);
+      }
+export function useMyOrdersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MyOrdersQuery, MyOrdersQueryVariables>) {
+          return Apollo.useLazyQuery<MyOrdersQuery, MyOrdersQueryVariables>(MyOrdersDocument, baseOptions);
+        }
+export type MyOrdersQueryHookResult = ReturnType<typeof useMyOrdersQuery>;
+export type MyOrdersLazyQueryHookResult = ReturnType<typeof useMyOrdersLazyQuery>;
+export type MyOrdersQueryResult = Apollo.QueryResult<MyOrdersQuery, MyOrdersQueryVariables>;
 export const LoginDocument = gql`
     mutation login($input: LoginInput!) {
   login(input: $input) {

@@ -2,23 +2,29 @@ import React from 'react';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {sizes, Styles, theme} from 'src/styles';
 import ArrowLeft from 'assets/svgs/arrow-left.svg';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import Common from './common';
 import navigation from 'src/utils/navigation';
 type Props = {
   title: string;
+  noGoBack: boolean;
 };
 function Header(props: Props) {
-  const {title} = props;
+  const {title, noGoBack} = props;
   const {top = 0} = useSafeAreaInsets();
   return (
     <Common.Block pt={top + 30} pb={30} ph={sizes.padding}>
-      <TouchableOpacity
-        style={[Styles.shadow, styles.backBtn]}
-        onPress={navigation.goBack}>
-        <ArrowLeft />
-      </TouchableOpacity>
+      {noGoBack ? (
+        <View style={{height: 44}} />
+      ) : (
+        <TouchableOpacity
+          style={[Styles.shadow, styles.backBtn]}
+          onPress={navigation.goBack}>
+          <ArrowLeft />
+        </TouchableOpacity>
+      )}
+
       <Common.Block>
         <Common.Txt
           color={theme.dark}

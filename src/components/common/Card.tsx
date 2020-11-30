@@ -1,11 +1,5 @@
 import React, {ReactNode} from 'react';
-import {
-  View,
-  StyleSheet,
-  ViewStyle,
-  TouchableOpacity,
-  StyleProp,
-} from 'react-native';
+import {View, StyleSheet, ViewStyle} from 'react-native';
 import {Styles} from 'src/styles';
 import {getSpace, Space} from './helpers';
 
@@ -17,12 +11,8 @@ export interface Props extends Space {
   backgroundColor?: string;
   padding?: number;
   borderRadius?: number;
-  clickable?: boolean;
   onPress?: () => void;
 }
-
-const Comp = (p: Props & {style: StyleProp<ViewStyle>}) =>
-  p.clickable ? <TouchableOpacity {...p} /> : <View {...p} />;
 
 const Card = (props: Props) => {
   const {
@@ -33,7 +23,7 @@ const Card = (props: Props) => {
     ...rest
   } = props;
   return (
-    <Comp
+    <View
       style={[
         styles.container,
         Styles.shadow,
@@ -44,7 +34,7 @@ const Card = (props: Props) => {
       ]}
       {...rest}>
       {children}
-    </Comp>
+    </View>
   );
 };
 

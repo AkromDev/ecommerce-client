@@ -13,52 +13,54 @@ type Props = {
 function CartItem(props: Props) {
   const {product} = props;
   return (
-    <Common.Card clickable={true} mb={20}>
-      <Common.Block flexDirection="row" alignItems="center">
-        <Image
-          style={styles.image}
-          resizeMode="contain"
-          source={{
-            uri: product.imageUrl,
-          }}
-        />
-        <Common.Block flexBasis="60%" mr={20}>
-          <Common.Txt
-            numberOfLines={1}
-            fontWeight="600"
-            size={16}
-            lineHeight={24}>
-            {product.productName}
-          </Common.Txt>
-          <Common.Txt
-            numberOfLines={1}
-            fontWeight="500"
-            size={14}
-            lineHeight={24}
-            color={colors.darkLighter}>
-            {product.description}
-          </Common.Txt>
-          <Common.Txt
-            numberOfLines={1}
-            fontWeight="600"
-            lineHeight={24}
-            color={theme.primary}>
-            ₩{product.price}
-          </Common.Txt>
+    <TouchableOpacity>
+      <Common.Card mb={20}>
+        <Common.Block flexDirection="row" alignItems="center">
+          <Image
+            style={styles.image}
+            resizeMode="contain"
+            source={{
+              uri: product.imageUrl,
+            }}
+          />
+          <Common.Block flexBasis="60%" mr={20}>
+            <Common.Txt
+              numberOfLines={1}
+              fontWeight="600"
+              size={16}
+              lineHeight={24}>
+              {product.productName}
+            </Common.Txt>
+            <Common.Txt
+              numberOfLines={1}
+              fontWeight="500"
+              size={14}
+              lineHeight={24}
+              color={colors.darkLighter}>
+              {product.description}
+            </Common.Txt>
+            <Common.Txt
+              numberOfLines={1}
+              fontWeight="600"
+              lineHeight={24}
+              color={theme.primary}>
+              ₩{product.price}
+            </Common.Txt>
+          </Common.Block>
+          <Common.Block alignItems="center">
+            <TouchableOpacity>
+              <Plus />
+            </TouchableOpacity>
+            <Common.Txt size={16} lineHeight={24} fontWeight="500">
+              2
+            </Common.Txt>
+            <TouchableOpacity>
+              <Minus />
+            </TouchableOpacity>
+          </Common.Block>
         </Common.Block>
-        <Common.Block alignItems="center">
-          <TouchableOpacity>
-            <Plus />
-          </TouchableOpacity>
-          <Common.Txt size={16} lineHeight={24} fontWeight="500">
-            2
-          </Common.Txt>
-          <TouchableOpacity>
-            <Minus />
-          </TouchableOpacity>
-        </Common.Block>
-      </Common.Block>
-    </Common.Card>
+      </Common.Card>
+    </TouchableOpacity>
   );
 }
 

@@ -6,9 +6,17 @@ import Block from './Block';
 type Props = {
   headerText?: string;
   placeholder?: string;
+  value?: string;
   onTextChange?: (v: string) => void;
+  secureTextEntry?: boolean;
 };
-function Input({headerText, placeholder, onTextChange}: Props) {
+function Input({
+  headerText,
+  placeholder,
+  onTextChange,
+  value,
+  secureTextEntry,
+}: Props) {
   return (
     <Block width="all">
       <Text style={styles.text}>{headerText}</Text>
@@ -18,6 +26,8 @@ function Input({headerText, placeholder, onTextChange}: Props) {
         onChangeText={onTextChange}
         autoCapitalize="none"
         autoCorrect={false}
+        secureTextEntry={secureTextEntry}
+        value={value || ''}
       />
     </Block>
   );

@@ -8,7 +8,7 @@ import Common from './common';
 import navigation from 'src/utils/navigation';
 type Props = {
   title: string;
-  noGoBack: boolean;
+  noGoBack?: boolean;
 };
 function Header(props: Props) {
   const {title, noGoBack} = props;

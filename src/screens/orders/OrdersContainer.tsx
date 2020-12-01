@@ -1,5 +1,6 @@
 import React from 'react';
 import Cart from './components/Orders';
+import {useMyOrdersQuery} from 'src/apollo/generated';
 
 export type Product = {
   productName: string;
@@ -59,6 +60,8 @@ const orders: Order[] = [
   },
 ];
 function CartContainer() {
+  const {data} = useMyOrdersQuery();
+  console.log('myOrders', data?.myOrders);
   return <Cart orders={orders} />;
 }
 

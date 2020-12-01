@@ -5,6 +5,7 @@ import {
   StyleSheet,
   StyleProp,
   TextStyle,
+  ActivityIndicator,
 } from 'react-native';
 import {sizes, theme} from 'src/styles';
 import {fontWeightType, getSpace, Space} from './helpers';
@@ -20,6 +21,7 @@ export interface ButtonProps extends TouchableOpacityProps, Space {
   fontWeight?: fontWeightType;
   width?: 'all' | number | string;
   textStyle?: StyleProp<TextStyle>;
+  loading?: boolean;
 }
 
 const Button = ({
@@ -32,6 +34,7 @@ const Button = ({
   txtColor,
   fontWeight,
   textStyle,
+  loading,
   ...rest
 }: ButtonProps) => {
   const textColor = {
@@ -52,7 +55,7 @@ const Button = ({
         style && style,
         getSpace(rest),
       ]}
-      disabled={disabled}
+      disabled={disabled || loading}
       activeOpacity={0.75}
       {...rest}>
       {left && left}
@@ -61,7 +64,7 @@ const Button = ({
         size="md"
         fontWeight={fontWeight || '500'}
         style={textStyle}>
-        {title}
+        {loading ? <ActivityIndicator /> : title}
       </Text>
       {right && right}
     </TouchableOpacity>

@@ -1,4 +1,5 @@
 import React from 'react';
+import {TouchableOpacity} from 'react-native';
 import Common from 'src/components/common';
 import {colors, theme} from 'src/styles';
 import navigation from 'src/utils/navigation';
@@ -19,46 +20,46 @@ function OrderItem(props: Props) {
     }
   });
   return (
-    <Common.Card
-      clickable={true}
-      mb={20}
+    <TouchableOpacity
       onPress={() => navigation.navigate('OrderDetails', {order})}>
-      <Common.Block flexDirection="row" alignItems="center">
-        <Common.Block width="100%" mr={20}>
-          <Common.Txt
-            numberOfLines={1}
-            fontWeight="600"
-            size={16}
-            lineHeight={24}>
-            {name}
-          </Common.Txt>
-          <Common.Txt
-            numberOfLines={1}
-            fontWeight="500"
-            size={14}
-            lineHeight={24}
-            color={colors.darkLighter}>
-            {order.products.length} products
-          </Common.Txt>
-          <Common.Block flexDirection="row" justifyContent="space-between">
+      <Common.Card mb={20}>
+        <Common.Block flexDirection="row" alignItems="center">
+          <Common.Block width="100%" mr={20}>
             <Common.Txt
               numberOfLines={1}
               fontWeight="600"
-              lineHeight={24}
-              color={theme.primary}>
-              ₩{order.total}
+              size={16}
+              lineHeight={24}>
+              {name}
             </Common.Txt>
             <Common.Txt
               numberOfLines={1}
-              fontWeight="600"
+              fontWeight="500"
+              size={14}
               lineHeight={24}
-              color={theme.grey}>
-              {order.orderDate}
+              color={colors.darkLighter}>
+              {order.products.length} products
             </Common.Txt>
+            <Common.Block flexDirection="row" justifyContent="space-between">
+              <Common.Txt
+                numberOfLines={1}
+                fontWeight="600"
+                lineHeight={24}
+                color={theme.primary}>
+                ₩{order.total}
+              </Common.Txt>
+              <Common.Txt
+                numberOfLines={1}
+                fontWeight="600"
+                lineHeight={24}
+                color={theme.grey}>
+                {order.orderDate}
+              </Common.Txt>
+            </Common.Block>
           </Common.Block>
         </Common.Block>
-      </Common.Block>
-    </Common.Card>
+      </Common.Card>
+    </TouchableOpacity>
   );
 }
 

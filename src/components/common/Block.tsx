@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  View,
-  ViewProps,
-  ViewStyle,
-  FlexStyle,
-  StyleProp,
-  TouchableOpacity,
-} from 'react-native';
+import {View, ViewProps, ViewStyle, FlexStyle, StyleProp} from 'react-native';
 import {Styles} from 'src/styles';
 import {getSpace, Space} from './helpers';
 
@@ -21,7 +14,6 @@ export interface Props extends ViewProps, Space {
   justifyContent?: FlexStyle['justifyContent'];
   children: React.ReactNode | React.ReactNode[];
   style?: StyleProp<ViewStyle>;
-  clickable?: boolean;
   onPress?: () => void;
   width?: 'all' | number | string;
 }
@@ -37,15 +29,11 @@ const Block = ({
   flex,
   flexDirection,
   flexBasis,
-  clickable,
   width,
   ...props
 }: Props) => {
-  const Comp = (p: Props) =>
-    clickable ? <TouchableOpacity {...p} /> : <View {...p} />;
-
   return (
-    <Comp
+    <View
       style={[
         (flex && {flex}) || null,
         (flexGrow && {flexGrow}) || null,
@@ -62,7 +50,7 @@ const Block = ({
       ]}
       {...props}>
       {children}
-    </Comp>
+    </View>
   );
 };
 export default Block;

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Image, StyleSheet, TouchableOpacity} from 'react-native';
 import Common from 'src/components/common';
 import {colors, theme} from 'src/styles';
@@ -12,21 +12,11 @@ type Props = {
   product: ProductFieldsFragment;
   refetch: () => void;
   handleRemove: (cart: CartItems) => void;
+  setCartItems: (cart: CartItems) => void;
+  cartItems: CartItems;
 };
 function CartItem(props: Props) {
-  const {product} = props;
-  const [cartItems, setCartItems] = useState(() => storage.getCartItems());
-
-  useEffect(() => {
-    storage.addCartListener(refreshComponenent);
-    return () => {
-      storage.removeCartListener(refreshComponenent);
-    };
-  }, []);
-
-  function refreshComponenent() {
-    setCartItems(storage.getCartItems());
-  }
+  const {product, cartItems, setCartItems} = props;
 
   const onIncrease = () => {
     const items = {...cartItems};

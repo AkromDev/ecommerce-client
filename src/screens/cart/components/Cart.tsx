@@ -1,5 +1,5 @@
 import {ApolloError} from '@apollo/client';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
 import {ProductFieldsFragment} from 'src/apollo/generated';
 import Common from 'src/components/common';
@@ -7,7 +7,7 @@ import Loading from 'src/components/loading';
 import LoadingOrError from 'src/components/LoadingOrError';
 import {sizes, theme} from 'src/styles';
 import navigation from 'src/utils/navigation';
-import {CartItems} from 'src/utils/storage';
+import storage, {CartItems} from 'src/utils/storage';
 import CartItem from './CartItem';
 
 type Props = {
@@ -19,13 +19,26 @@ type Props = {
 };
 function Cart(props: Props) {
   const {data, error, loading} = props;
+  const [cartItems, setCartItems] = useState(() => storage.getCartItems());
+
+  useEffect(() => {
+    storage.addCartListener(refreshComponenent);
+    return () => {
+      storage.removeCartListener(refreshComponenent);
+    };
+  }, []);
   if (error) {
     return <LoadingOrError />;
   }
   if (loading) {
     return <Loading />;
   }
-
+  function refreshComponenent() {
+    setCartItems(storage.getCartItems());
+  }
+  const total = Array.isArray(data)
+    ? data.reduce((prev, curr) => prev + curr.price * cartItems[curr._id], 0)
+    : 0;
   return (
     <SafeAreaView>
       <ScrollView style={{paddingHorizontal: sizes.padding}}>
@@ -36,6 +49,8 @@ function Cart(props: Props) {
               product={item}
               refetch={props.refetch}
               handleRemove={props.handleRemove}
+              cartItems={cartItems}
+              setCartItems={setCartItems}
             />
           ))}
         </Common.Block>
@@ -50,14 +65,20 @@ function Cart(props: Props) {
                 Total
               </Common.Txt>
               <Common.Txt fontWeight="bold" size={20} color={theme.primary}>
-                ${data.reduce((prev, curr) => prev + curr.price, 0)}
+                ${total}
               </Common.Txt>
             </Common.Block>
             <Common.Button
-              onPress={() => navigation.navigate('PaymentForm')}
+              onPress={() => {
+                const products = data.map((p) => ({
+                  productId: p._id,
+                  quantity: cartItems[p._id],
+                }));
+                navigation.navigate('PaymentForm', {products, total});
+              }}
               mt={30}
               txtColor={theme.black}
-              title="Payment"
+              title="Checkout"
               fontWeight="600"
             />
           </>

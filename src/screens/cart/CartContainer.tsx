@@ -13,7 +13,6 @@ function CartContainer() {
     const cartItems = storage.getCartItems();
 
     if (Array.isArray(items)) {
-      console.log('cartItems', cartItems);
       return items.filter((p) => cartItems[p._id] > 0);
     }
     return [];

@@ -1,44 +1,70 @@
+import {ApolloError} from '@apollo/client';
 import React from 'react';
 import {SafeAreaView, ScrollView} from 'react-native';
+import {ProductFieldsFragment} from 'src/apollo/generated';
 import Common from 'src/components/common';
+import Loading from 'src/components/loading';
+import LoadingOrError from 'src/components/LoadingOrError';
 import {sizes, theme} from 'src/styles';
 import navigation from 'src/utils/navigation';
-import {Product} from '../CartContainer';
+import {CartItems} from 'src/utils/storage';
 import CartItem from './CartItem';
 
 type Props = {
-  data: Product[];
+  data: ProductFieldsFragment[];
+  error: ApolloError | undefined;
+  loading: boolean;
+  refetch: () => void;
+  handleRemove: (cart: CartItems) => void;
 };
 function Cart(props: Props) {
-  const {data} = props;
-  console.log('data', props.data);
+  const {data, error, loading} = props;
+  if (error) {
+    return <LoadingOrError />;
+  }
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <SafeAreaView>
       <ScrollView style={{paddingHorizontal: sizes.padding}}>
         <Common.Block alignItems="center" mt={50}>
           {data.map((item) => (
-            <CartItem key={item.productName} product={item} />
+            <CartItem
+              key={item._id}
+              product={item}
+              refetch={props.refetch}
+              handleRemove={props.handleRemove}
+            />
           ))}
         </Common.Block>
-        <Common.Block
-          flexDirection="row"
-          justifyContent="space-between"
-          alignItems="center"
-          mt={40}>
-          <Common.Txt size={18} fontWeight="600" color={theme.darkLighter}>
-            Total
-          </Common.Txt>
-          <Common.Txt fontWeight="bold" size={20} color={theme.primary}>
-            ₩637000
-          </Common.Txt>
-        </Common.Block>
-        <Common.Button
-          onPress={() => navigation.navigate('PaymentForm')}
-          mt={30}
-          txtColor={theme.black}
-          title="Payment"
-          fontWeight="600"
-        />
+        {data.length > 0 && (
+          <>
+            <Common.Block
+              flexDirection="row"
+              justifyContent="space-between"
+              alignItems="center"
+              mt={40}>
+              <Common.Txt size={18} fontWeight="600" color={theme.darkLighter}>
+                Total
+              </Common.Txt>
+              <Common.Txt fontWeight="bold" size={20} color={theme.primary}>
+                ${data.reduce((prev, curr) => prev + curr.price, 0)}
+              </Common.Txt>
+            </Common.Block>
+            <Common.Button
+              onPress={() => navigation.navigate('PaymentForm')}
+              mt={30}
+              txtColor={theme.black}
+              title="Payment"
+              fontWeight="600"
+            />
+          </>
+        )}
+        {data.length === 0 && (
+          <Common.Txt textAlign="center">Your cart it empty</Common.Txt>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

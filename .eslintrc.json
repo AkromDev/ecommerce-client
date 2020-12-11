@@ -3,6 +3,7 @@
   "extends": "@react-native-community",
   "rules":{
     "no-unused-vars": 2,
-    "no-undef": 2
+    "no-undef": 2,
+    "react-hooks/exhaustive-deps": 1
   }
 }

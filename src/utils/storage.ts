@@ -1,12 +1,17 @@
 import {isArr} from './arrayUtils';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-type AllAsyncKeys = 'searchHistory' | 'token';
+type AllAsyncKeys = 'searchHistory' | 'token' | 'cartItems';
+
+export type CartItems = {
+  [productId: string]: number;
+};
 
 class Storage {
-  allAsyncKeys: AllAsyncKeys[] = ['searchHistory', 'token'];
+  allAsyncKeys: AllAsyncKeys[] = ['searchHistory', 'token', 'cartItems'];
   searchHistory: string = '';
   token: string = '';
+  cartItems: string = '';
 
   // Makes sure the Storage is in sync with the Async Storage. This should be first thing called as app loads.
   initializeStorage = (): Promise<undefined | string> => {
@@ -69,6 +74,54 @@ class Storage {
           });
       }
     });
+  };
+
+  // =======================================================================
+  // CART
+  // =======================================================================
+
+  setCartItems = (cartItems: CartItems, onSuccess?: () => void) => {
+    this.setToStorage('cartItems', JSON.stringify(cartItems)).then(() => {
+      if (typeof onSuccess === 'function') {
+        onSuccess();
+      }
+    });
+  };
+  getCartItems = (): CartItems => {
+    return this.cartItems ? JSON.parse(this.cartItems) : {};
+  };
+
+  cartListener: (() => void)[] = [];
+
+  // Convenience function to add to cartListener. The newListeners should be handlers (functions!).
+  addCartListener = (newListener: () => void) => {
+    // Toggle the existence of a listener within the cartListener array.
+    const idxListener = this.cartListener.indexOf(newListener); // Check to see if the newListener is already in the cartListener list.
+
+    if (idxListener === -1) {
+      // If it doesn't exist, add it.
+      const newLen = this.cartListener.push(newListener);
+      return newLen - 1;
+    }
+  };
+
+  // Convenience function to remove from cartListener. The newListeners should be handlers (functions!).
+  removeCartListener = (newListener: () => void) => {
+    // Toggle the existence of a listener within the cartListener array.
+    const idxListener = this.cartListener.indexOf(newListener); // Check to see if the newListener is already in the cartListener list.
+
+    if (idxListener !== -1) {
+      this.cartListener.splice(idxListener, 1);
+    } // If it doesn't exist, add it.
+  };
+
+  // Convenience function to notify everyone on the cartListener list.
+  notifyCartListener = () => {
+    for (let i = 0; i < this.cartListener.length; i++) {
+      if (typeof this.cartListener[i] === 'function') {
+        this.cartListener[i]();
+      }
+    }
   };
 }
 export default new Storage();

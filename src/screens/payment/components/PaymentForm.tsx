@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import Header from 'src/components/Header';
 import {sizes, theme} from 'src/styles';
@@ -6,18 +6,72 @@ import Common from 'src/components/common';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import navigation from 'src/utils/navigation';
 
-function PaymentForm() {
+type Props = {
+  products: any;
+};
+function PaymentForm(props) {
   const {bottom} = useSafeAreaInsets();
+  const [name, setName] = useState('');
+  const [phone, setPhone] = useState('');
+  const [zipcode, setZipcode] = useState('');
+  const [address, setAddress] = useState('');
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const {total, products} = props;
+  const onContinue = () => {
+    const err: {[key: string]: string} = {};
+    if (!name.trim()) {
+      err.name = 'Name is required';
+    }
+    if (!phone.trim()) {
+      err.phone = 'Phone number is required';
+    }
+    if (!zipcode.trim()) {
+      err.zipcode = 'Zipcode is required';
+    }
+    if (!address.trim()) {
+      err.address = 'Address is required';
+    }
+    if (Object.keys(err).length > 0) {
+      setErrors(err);
+    } else {
+      navigation.navigate('PaymentConfirm', {
+        receiver: {name, zipcode, address, phone},
+        products,
+      });
+    }
+  };
   return (
     <ScrollView>
       <Header title="Payment" />
       <View style={styles.container}>
-        <Common.Input headerText="First Name" placeholder="John" />
-        <Common.Input headerText="Last Name" placeholder="Doe" />
-        <Common.Input headerText="Email" placeholder="test@gmail.com" />
-        <Common.Input headerText="Phone Number" placeholder="+123456789" />
-        <Common.Input headerText="Zipcode" placeholder="123456" />
-        <Common.Input headerText="Shipping Address" placeholder="Address" />
+        <Common.Input
+          headerText="Receiver's Name"
+          value={name}
+          onTextChange={(v) => setName(v)}
+          placeholder="John Doe"
+          error={errors.name}
+        />
+        <Common.Input
+          headerText="Phone Number"
+          value={phone}
+          onTextChange={(v) => setPhone(v)}
+          placeholder="+123456789"
+          error={errors.phone}
+        />
+        <Common.Input
+          headerText="Zipcode"
+          value={zipcode}
+          onTextChange={(v) => setZipcode(v)}
+          placeholder="123456"
+          error={errors.zipcode}
+        />
+        <Common.Input
+          headerText="Shipping Address"
+          value={address}
+          onTextChange={(v) => setAddress(v)}
+          placeholder="Address"
+          error={errors.address}
+        />
         <Common.Block
           flexDirection="row"
           justifyContent="space-between"
@@ -27,7 +81,7 @@ function PaymentForm() {
             Product price
           </Common.Txt>
           <Common.Txt fontWeight="600" size={14} color={theme.darkLighter}>
-            ₩637000
+            ${total}
           </Common.Txt>
         </Common.Block>
         <Common.Block
@@ -39,7 +93,7 @@ function PaymentForm() {
             Shipping price
           </Common.Txt>
           <Common.Txt fontWeight="600" size={14} color={theme.darkLighter}>
-            ₩3000
+            $4
           </Common.Txt>
         </Common.Block>
         <Common.Block
@@ -51,16 +105,16 @@ function PaymentForm() {
             Total
           </Common.Txt>
           <Common.Txt fontWeight="bold" size={22} color={theme.primary}>
-            ₩640000
+            ${total + 4}
           </Common.Txt>
         </Common.Block>
         <Common.Button
-          title="Complete"
+          title="Continue"
           style={styles.formButton}
           mt={30}
           mb={bottom + 20}
           width="all"
-          onPress={() => navigation.navigate('PaymentConfirm')}
+          onPress={onContinue}
         />
       </View>
     </ScrollView>

@@ -1,38 +1,51 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {ProductFieldsFragment, useProductsQuery} from 'src/apollo/generated';
+import storage, {CartItems} from 'src/utils/storage';
 import Cart from './components/Cart';
 
-export type Product = {
-  productName: string;
-  imageUrl: string;
-  description: string;
-  price: number;
-};
-
-const data: Product[] = [
-  {
-    productName: 'Loung chair',
-    description: 'Loung chair best value',
-    price: 200000,
-    imageUrl:
-      'https://media.crystallize.com/furniture/20/4/24/4/loung-chair.png',
-  },
-  {
-    productName: 'Velour sofa',
-    description: 'Soft sofa with harsh price',
-    price: 300323,
-    imageUrl:
-      'https://media.crystallize.com/furniture/20/6/17/10/velour-sofa.png',
-  },
-  {
-    productName: 'Clothing rack with clothes',
-    description: 'Clothing rack to pack your clothes compact',
-    price: 232323,
-    imageUrl:
-      'https://media.crystallize.com/furniture/20/6/17/4/clothing-rack-with-clothes.png',
-  },
-];
 function CartContainer() {
-  return <Cart data={data} />;
+  const [products, setProducts] = useState<ProductFieldsFragment[]>([]);
+  const {data, error, loading, refetch} = useProductsQuery({
+    fetchPolicy: 'network-only',
+  });
+
+  const getCartProducts = (items: ProductFieldsFragment[] | undefined) => {
+    const cartItems = storage.getCartItems();
+
+    if (Array.isArray(items)) {
+      return items.filter((p) => cartItems[p._id] > 0);
+    }
+    return [];
+  };
+
+  useEffect(() => {
+    storage.addCartListener(refreshComponenent);
+    return () => {
+      storage.removeCartListener(refreshComponenent);
+    };
+  }, []);
+
+  useEffect(() => {
+    setProducts(getCartProducts(data?.products));
+  }, [data]);
+
+  function refreshComponenent() {
+    refetch().then((res) => {
+      setProducts(getCartProducts(res.data.products));
+    });
+  }
+  const handleRemove = (cart: CartItems) => {
+    setProducts((ps) => ps.filter((p) => cart[p._id] > 0));
+  };
+  return (
+    <Cart
+      data={products || []}
+      error={error}
+      loading={loading}
+      refetch={refreshComponenent}
+      handleRemove={handleRemove}
+    />
+  );
 }
 
 export default CartContainer;

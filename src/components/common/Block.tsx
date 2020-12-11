@@ -44,9 +44,9 @@ const Block = ({
         justifyContent && {justifyContent},
         ((width || width === 0) && width !== 'all' && {width}) || null,
         width === 'all' && {width: '100%'},
-        style && style,
         center && Styles.center,
         getSpace(props),
+        style && style,
       ]}
       {...props}>
       {children}

@@ -40,7 +40,7 @@ function Cart(props: Props) {
     ? data.reduce((prev, curr) => prev + curr.price * cartItems[curr._id], 0)
     : 0;
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <ScrollView style={{paddingHorizontal: sizes.padding}}>
         <Common.Block alignItems="center" mt={50}>
           {data.map((item) => (

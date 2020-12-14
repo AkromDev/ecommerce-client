@@ -1,0 +1,10 @@
+fragment UserFields on User {
+    _id
+    email
+    firstName
+    lastName
+    isVerified
+    roles
+    address
+    phone
+}

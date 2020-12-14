@@ -55,7 +55,7 @@ function OrderItem(props: Props) {
                 fontWeight="600"
                 lineHeight={24}
                 color={theme.primary}>
-                ${total}
+                ${total + 4}
               </Common.Txt>
               <Common.Txt
                 numberOfLines={1}

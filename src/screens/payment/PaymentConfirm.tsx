@@ -14,6 +14,7 @@ function PaymentConfirm(props) {
   const {receiver, products} = params;
   const [createOrder, {loading}] = useCreateOrderMutation({
     variables: {input: {products, receiver}},
+    refetchQueries: ['myOrders'],
   });
   return (
     <ScrollView>

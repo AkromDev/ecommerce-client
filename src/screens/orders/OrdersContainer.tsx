@@ -1,10 +1,17 @@
 import React from 'react';
-import Cart from './components/Orders';
+import Orders from './components/Orders';
 import {useMyOrdersQuery} from 'src/apollo/generated';
 
 function CartContainer() {
-  const {data} = useMyOrdersQuery();
-  return <Cart orders={data?.myOrders || []} />;
+  const {data, loading, error, refetch} = useMyOrdersQuery();
+  return (
+    <Orders
+      orders={data?.myOrders || []}
+      loading={loading}
+      error={error}
+      refetch={refetch}
+    />
+  );
 }
 
 export default CartContainer;

@@ -37,7 +37,9 @@ const authLink = setContext((_, {headers}) => {
 const link = from([
   errorLink,
   authLink,
-  createHttpLink({uri: 'http://localhost:4000/graphql'}),
+  createHttpLink({
+    uri: 'https://capstone-ecommerce-backend.herokuapp.com/graphql',
+  }),
 ]);
 
 const client = new ApolloClient({

@@ -3,20 +3,21 @@ import {View, StyleSheet, ScrollView} from 'react-native';
 import Header from 'src/components/Header';
 import {sizes, theme} from 'src/styles';
 import Common from 'src/components/common';
-import {Order} from 'src/screens/orders/OrdersContainer';
 import OrderDetailsItem from './OrderDetailsItem';
+import {OrderFieldsFragment} from 'src/apollo/generated';
 
 type Props = {
   route: {
     params: {
-      order: Order;
+      order: OrderFieldsFragment;
+      total: number;
     };
   };
 };
 function OrderDetails(props: Props) {
   const {
     route: {
-      params: {order},
+      params: {order, total},
     },
   } = props;
   return (
@@ -24,8 +25,12 @@ function OrderDetails(props: Props) {
       <Header title="Order Details" />
       <View style={styles.container}>
         <Common.Block alignItems="center" mb={40}>
-          {order.products.map((item) => (
-            <OrderDetailsItem key={item.productName} product={item} />
+          {order.productsOrdered.map(({product, quantity}) => (
+            <OrderDetailsItem
+              key={product._id}
+              product={product}
+              quantity={quantity}
+            />
           ))}
         </Common.Block>
         <Common.Block
@@ -34,10 +39,10 @@ function OrderDetails(props: Props) {
           alignItems="center"
           mt={12}>
           <Common.Txt size={16} fontWeight="500" color={theme.darkLighter}>
-            Product price
+            Products cost
           </Common.Txt>
           <Common.Txt fontWeight="600" size={14} color={theme.darkLighter}>
-            ₩{order.total}
+            ${total}
           </Common.Txt>
         </Common.Block>
         <Common.Block
@@ -46,10 +51,10 @@ function OrderDetails(props: Props) {
           alignItems="center"
           mt={12}>
           <Common.Txt size={16} fontWeight="500" color={theme.darkLighter}>
-            Shipping price
+            Shipping cost
           </Common.Txt>
           <Common.Txt fontWeight="600" size={14} color={theme.darkLighter}>
-            ₩{order.shipmentFee}
+            $4
           </Common.Txt>
         </Common.Block>
         <Common.Block
@@ -61,7 +66,7 @@ function OrderDetails(props: Props) {
             Total
           </Common.Txt>
           <Common.Txt fontWeight="bold" size={22} color={theme.primary}>
-            ₩{order.total + order.shipmentFee}
+            ${total + 4}
           </Common.Txt>
         </Common.Block>
       </View>

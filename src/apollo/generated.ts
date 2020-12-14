@@ -152,12 +152,26 @@ export type Order = {
   userId: Scalars['ID'];
   user: User;
   productsOrdered: Array<ProductOrdered>;
+  status?: Maybe<Scalars['String']>;
+  receiver: Receiver;
+  orderDate?: Maybe<Scalars['String']>;
+  cancellationDate?: Maybe<Scalars['String']>;
+  shipmentDate?: Maybe<Scalars['String']>;
+  deliveryDate?: Maybe<Scalars['String']>;
 };
 
 export type ProductOrdered = {
   __typename?: 'ProductOrdered';
   quantity: Scalars['Int'];
   product: Product;
+};
+
+export type Receiver = {
+  __typename?: 'Receiver';
+  name: Scalars['String'];
+  phone: Scalars['String'];
+  address: Scalars['String'];
+  zipcode: Scalars['String'];
 };
 
 export type CreateStoreInput = {
@@ -202,7 +216,7 @@ export type ResetPasswordInput = {
 
 export type CreateOrderInput = {
   products: Array<OrderProduct>;
-  receiver: Receiver;
+  receiver: ReceiverInput;
 };
 
 export type OrderProduct = {
@@ -210,7 +224,7 @@ export type OrderProduct = {
   quantity: Scalars['Int'];
 };
 
-export type Receiver = {
+export type ReceiverInput = {
   name: Scalars['String'];
   phone: Scalars['String'];
   address: Scalars['String'];
@@ -239,6 +253,25 @@ export type ProductsQuery = (
   )> }
 );
 
+export type OrderFieldsFragment = (
+  { __typename?: 'Order' }
+  & Pick<Order, '_id' | 'status' | 'orderDate' | 'cancellationDate' | 'shipmentDate' | 'deliveryDate'>
+  & { user: (
+    { __typename?: 'User' }
+    & Pick<User, 'firstName' | 'lastName'>
+  ), productsOrdered: Array<(
+    { __typename?: 'ProductOrdered' }
+    & Pick<ProductOrdered, 'quantity'>
+    & { product: (
+      { __typename?: 'Product' }
+      & ProductFieldsFragment
+    ) }
+  )>, receiver: (
+    { __typename?: 'Receiver' }
+    & Pick<Receiver, 'name' | 'phone' | 'zipcode' | 'address'>
+  ) }
+);
+
 export type MyOrdersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -246,18 +279,7 @@ export type MyOrdersQuery = (
   { __typename?: 'Query' }
   & { myOrders: Array<(
     { __typename?: 'Order' }
-    & Pick<Order, '_id'>
-    & { user: (
-      { __typename?: 'User' }
-      & Pick<User, 'firstName' | 'lastName'>
-    ), productsOrdered: Array<(
-      { __typename?: 'ProductOrdered' }
-      & Pick<ProductOrdered, 'quantity'>
-      & { product: (
-        { __typename?: 'Product' }
-        & Pick<Product, '_id' | 'title' | 'imageUrl'>
-      ) }
-    )> }
+    & OrderFieldsFragment
   )> }
 );
 
@@ -310,6 +332,32 @@ export const ProductFieldsFragmentDoc = gql`
   price
 }
     `;
+export const OrderFieldsFragmentDoc = gql`
+    fragment OrderFields on Order {
+  _id
+  user {
+    firstName
+    lastName
+  }
+  productsOrdered {
+    quantity
+    product {
+      ...ProductFields
+    }
+  }
+  status
+  receiver {
+    name
+    phone
+    zipcode
+    address
+  }
+  orderDate
+  cancellationDate
+  shipmentDate
+  deliveryDate
+}
+    ${ProductFieldsFragmentDoc}`;
 export const ProductsDocument = gql`
     query products {
   products {
@@ -345,22 +393,10 @@ export type ProductsQueryResult = Apollo.QueryResult<ProductsQuery, ProductsQuer
 export const MyOrdersDocument = gql`
     query myOrders {
   myOrders {
-    _id
-    user {
-      firstName
-      lastName
-    }
-    productsOrdered {
-      quantity
-      product {
-        _id
-        title
-        imageUrl
-      }
-    }
+    ...OrderFields
   }
 }
-    `;
+    ${OrderFieldsFragmentDoc}`;
 
 /**
  * __useMyOrdersQuery__

@@ -1,0 +1,24 @@
+fragment OrderFields on Order{
+    _id
+    user{
+      firstName
+      lastName
+    }
+   productsOrdered{
+    quantity
+    product{
+     ...ProductFields
+    }
+  }
+  status
+  receiver{
+    name
+    phone
+    zipcode
+    address
+  }
+  orderDate
+  cancellationDate
+  shipmentDate
+  deliveryDate
+}

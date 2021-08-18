@@ -29,5 +29,7 @@ While it does not have many features, it uses many sought-after technologies suc
 - Create Store (API only)
 - Create Product (API only)
 
-![Alt Text](demo.gif)
+<br>
+
+<img src="demo.gif" width="300" />
 
